@@ -1,3 +1,4 @@
+print('packsquash-automator V0.0')
 import tkinter as tk,os,shutil,sys,subprocess as sp
 try:import ctypes
 except:print("Failed to import 'ctypes'")
