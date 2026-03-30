@@ -1,5 +1,5 @@
 # packsquash-automator
-Automates a lot of the stuff for packsquash.exe
+> Automates a lot of the stuff for packsquash.exe
 ## Dependencies
 * **[packsquash.exe](https://github.com/ComunidadAylas/PackSquash)**  
 * **Python 3.9+** (I personally use 3.14)
@@ -40,4 +40,6 @@ force_include=true
 force_include=true
 ```
 ### Current `packsquash.exe` command
-`"{dir}/packsquash.exe" "{dir}/packsquash.toml"`
+`"{dir}/packsquash.exe" "{dir}/packsquash.toml"`  
+## Tested Enviorments
+* Windows 11, Python 3.14
