@@ -39,3 +39,5 @@ force_include=true
 ["**.json"]
 force_include=true
 ```
+### Current `packsquash.exe` command
+`"{dir}/packsquash.exe" "{dir}/packsquash.toml"`
