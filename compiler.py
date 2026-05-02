@@ -4,11 +4,11 @@ try:import ctypes
 except Exception as e:print(f'🔴 {e}')
 from tkinter import filedialog
 
-SCRIPT_DIR=os.path.dirname(os.path.abspath(__file__))
+if getattr(sys,'frozen',False):SCRIPT_DIR=os.path.dirname(sys.executable)
+else:SCRIPT_DIR=os.path.dirname(os.path.abspath(__file__))
 WORK_DIR=os.path.join(SCRIPT_DIR,'packsquash_spec')
 EXE_PATH=os.path.join(WORK_DIR,'packsquash.exe')
 TOML_PATH=os.path.join(WORK_DIR,'config.toml')
-OUT_PATH=os.path.join(SCRIPT_DIR,'pack.zip')
 
 def OnExit():
     shutil.rmtree(WORK_DIR,ignore_errors=True)
@@ -39,14 +39,17 @@ ICO_B64=(b'iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAACDVBMVEVHcExGOi1GOi1GO
 
 root=tk.Tk()
 root.withdraw()
+root.wm_attributes('-topmost', True)
 icon=tk.PhotoImage(data=ICO_B64)
 root.iconphoto(True,icon)
 folder=filedialog.askdirectory(title='Select your resource pack folder')
 root.destroy()
 
 if not folder:fail('A folder is required.')
-if not os.access(folder, os.R_OK):fail(f'Missing read permission for "{folder}".')
+if not os.access(folder,os.R_OK):fail(f'Missing read permission for "{folder}".')
 ok(f'"{folder}" chosen')
+
+OUT_PATH=os.path.join(SCRIPT_DIR,f'{os.path.basename(folder).lower().replace(' ','-')}.zip')
 
 try:
     shutil.rmtree(WORK_DIR,ignore_errors=True)
@@ -63,8 +66,7 @@ except Exception as e:fail(f'Could not write executable: {e}')
 folder_fwd=folder.replace('\\','/')
 out_fwd=OUT_PATH.replace('\\','/')
 
-TOML=f'''\
-pack_directory = "{folder_fwd}"
+TOML=f'''pack_directory = "{folder_fwd}"
 output_file_path = "{out_fwd}"
 zip_compression_iterations = 255
 recompress_compressed_files = true
